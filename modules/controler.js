@@ -5,8 +5,8 @@ const postBackHandler = require('./handlers/post-back-handler');
 const quickReply = require('./handlers/quick-reply-handler');
 const Fb = require('./fb');
 const config = require('../config');
-const fb = new Fb(config.token, config.messengerAPI);
 const watcher = require('./handlers/delivery-handeler');
+const fb = new Fb(config.token, config.messengerAPI, watcher);
 
 module.exports = (req, res) => {
   const input = req.body.entry[0].messaging;
@@ -14,7 +14,7 @@ module.exports = (req, res) => {
     const event=input[i];
     const sender=event.sender.id;
     if (event.message && event.message.text) {        
-      textMessageHandler(fb, sender, event.message.text, watcher, res); 
+      textMessageHandler(fb, sender, event.message.text, res); 
     } else if (event.postback) {
       postBackHandler(fb, sender, event.postback, res);
     } else if (event.message && event.message.quick_reply) {
