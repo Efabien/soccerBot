@@ -16,9 +16,12 @@ module.exports = class Fb {
         recipient: { id: sender},
         message: data
       }
-    }).then((error, response, body) => {
-      if (response && response.body.error) throw new Error(response.body.error);
-      return response;
+    }).then((response, body) => {
+      if (response.error) {
+        throw new Error(response.error)
+      } else {
+        return response;
+      }
     });  
   }
 

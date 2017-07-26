@@ -26,7 +26,6 @@ app.get('/webhook/', fbVerification);
 // to post data
 app.post('/webhook/', controler)
 
-
 // spin server
 app.listen(app.get('port'), function() {
 	console.log('running on port', app.get('port'))
