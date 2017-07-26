@@ -1,5 +1,5 @@
  //find the left space before the 300th char, take a string as param
-var breakingPoint=  function (text){
+const breakingPoint=  function (text){
   var hold=text.split(' ');
   var i=1;
   var count;
@@ -15,4 +15,24 @@ var breakingPoint=  function (text){
   return count;
   }
 
-  exports.bkp=breakingPoint;
+const urlBuilder = (params, queryParams) => {
+  let result = '';
+  let parameters = '';
+
+  result = params.join('/');
+  if (queryParams) {
+    queryParams.forEach((element, index) => {
+      for(key in element) {
+        parameters += index === 0
+        ? '?' + key + '=' + element[key]
+        : '&' + key + '=' + element[key];
+      }
+    });
+  }
+  return result + parameters;
+} 
+
+  
+exports.bkp = breakingPoint;
+exports.urlBuilder = urlBuilder;
+
