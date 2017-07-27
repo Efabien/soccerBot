@@ -47,4 +47,21 @@ module.exports = class Fb {
       });
     });
   }
+
+  quickReplyButtons(text, params) {
+    const result = {
+      text: text,
+      quick_replies: []
+    };
+    params.forEach(param => {
+      result.quick_replies.push(
+        {
+          content_type: 'text',
+          title: param.title,
+          payload: param.payload
+        }
+      );
+    });
+    return result;
+  }
 }

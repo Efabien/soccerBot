@@ -15,7 +15,7 @@ module.exports = class {
 				authorization: this._authToken
 			}
 		}).then(response => {
-			return response;
+			return JSON.parse(response);
 		}).catch(error => {
 			console.log(error);
 		});

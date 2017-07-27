@@ -1,3 +1,4 @@
+const footFunctionality = require('./functionality/foot');
 
 module.exports = (fb, sender, data, res) => {
 	fb.sendText(sender, data)
@@ -7,4 +8,6 @@ module.exports = (fb, sender, data, res) => {
 	.catch((error) => {
 		console.log(error);
 	});
+
+	if (data === 'foot') footFunctionality.trigger(fb, sender);
 }
