@@ -1,3 +1,6 @@
+const footFunctionality = require('./functionality/foot');
+
 module.exports = (fb, sender, data, res) => {
-	return;
+	console.log(data);
+	res.sendStatus(200);
 }

@@ -1,3 +1,12 @@
+const footFunctionality = require('./functionality/foot');
+
 module.exports = (fb, sender, data, res) => {
-	return;
+	const type = data.payload.split('_')[0];
+	if (type === 'foot') {
+		const ref = data.payload.split('_')[1];
+		footFunctionality.nextNew(fb, sender, ref)
+		.then(response => {
+			res.sendStatus(200);
+		});
+	}
 }

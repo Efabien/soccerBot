@@ -14,16 +14,20 @@
 			const message = { text: result.description };
 			const buttons = fb.quickReplyButtons(
 				'Aller aux news suivants',
-				 [ 
-				 	{
-				 		title: 'suivant',
-				 		payload: 'foot' + result.created
-				 	}
-				 ]
-				 );
-
+				 [{ title: 'suivant', payload: 'foot' + result.created }]);
 			fb.sendBatch(sender, [message, buttons]);
-		})
+		});
+	}
+
+	nextNew(fb, sender, refStamp) {
+		this._restifeo.getNextNews('foot', refStamp)
+		.then(result => {
+			const message = { text: result.description };
+			const buttons = fb.quickReplyButtons(
+				'Aller aux news suivants',
+				 [{ title: 'suivant', payload: 'foot_' + result.created }]);
+			fb.sendBatch(sender, [message, buttons]);
+		});
 	}
 }
 
