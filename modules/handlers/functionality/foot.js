@@ -14,7 +14,7 @@
 			const message = { text: result.description };
 			const buttons = fb.quickReplyButtons(
 				'Aller aux news suivants',
-				 [{ title: 'suivant', payload: 'foot' + result.created }]);
+				 [{ title: 'suivant', payload: 'foot_' + result.created }]);
 			fb.sendBatch(sender, [message, buttons]);
 		});
 	}

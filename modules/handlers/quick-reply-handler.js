@@ -5,8 +5,6 @@ module.exports = (fb, sender, data, res) => {
 	if (type === 'foot') {
 		const ref = data.payload.split('_')[1];
 		footFunctionality.nextNew(fb, sender, ref)
-		.then(response => {
-			res.sendStatus(200);
-		});
+		res.sendStatus(200);
 	}
 }
