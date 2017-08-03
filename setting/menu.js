@@ -44,11 +44,11 @@ const request = require('request-promise');
 }
 **/
 module.exports = (req, res) => {
-	request( {
+  request( {
 		url: config.messengerProfile ,
 		qs: { access_token: config.token },
 		method: 'POST',
-		json: req.params.setting
+		json: req.body.setting
 	}).then(response => {
 		console.log(response);
 		res.send(response)
