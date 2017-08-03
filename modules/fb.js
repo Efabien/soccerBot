@@ -54,13 +54,13 @@ module.exports = class Fb {
       quick_replies: []
     };
     params.forEach(param => {
-      result.quick_replies.push(
-        {
+      const hold = {
           content_type: 'text',
           title: param.title,
           payload: param.payload
-        }
-      );
+        };
+      if (param.image_url) hold.image_url = param.image_url;
+      result.quick_replies.push(hold);
     });
     return result;
   }

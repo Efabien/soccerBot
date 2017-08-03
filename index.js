@@ -3,7 +3,11 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 
+const getStarted = require('./setting/get-started');
+const menu = require('./setting/menu');
+
 const fbVerification = require('./middlewares/fb-verification');
+const apiAcces = require('./middlewares/acces');
 const controler = require('./modules/controler');
 
 app.set('port', (process.env.PORT || 5000));
@@ -23,7 +27,11 @@ app.get('/', function (req, res) {
 app.get('/webhook/', fbVerification);
 
 // to post data
-app.post('/webhook/', controler)
+app.post('/webhook/', controler);
+
+app.post('/setting/getStarted', apiAcces, getStarted);
+
+app.post('/setting/menu', apiAcces, menu);
 
 // spin server
 app.listen(app.get('port'), function() {
