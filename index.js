@@ -5,6 +5,7 @@ const app = express();
 
 const getStarted = require('./setting/get-started');
 const menu = require('./setting/menu');
+const greeting = require('./setting/greeting');
 
 const fbVerification = require('./middlewares/fb-verification');
 const apiAcces = require('./middlewares/acces');
@@ -32,6 +33,8 @@ app.post('/webhook/', controler);
 app.post('/setting/getStarted', apiAcces, getStarted);
 
 app.post('/setting/menu', apiAcces, menu);
+
+app.post('/setting/greeting', apiAcces, greeting);
 
 // spin server
 app.listen(app.get('port'), function() {
