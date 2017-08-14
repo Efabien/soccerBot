@@ -15,6 +15,7 @@ module.exports = class Fb {
     }
     return request( {
       url: this._url,
+      timeout: 120000,
       qs:{access_token: this._token},
       method: 'POST',
       json: {
