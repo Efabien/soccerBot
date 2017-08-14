@@ -46,6 +46,7 @@ const request = require('request-promise');
 module.exports = (req, res) => {
   request( {
 		url: config.messengerProfile ,
+    timeout: 120000,
 		qs: { access_token: config.token },
 		method: 'POST',
 		json: req.body.setting
