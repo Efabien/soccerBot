@@ -27,7 +27,12 @@ module.exports = class {
 	}
 
 	getNextNews(topic, refStamp) {
-		const url = tool.urlBuilder([this._baseUrl, 'api','feed', topic, 'next'], [{ ref: refStamp }]);
+		const url = tool.urlBuilder([this._baseUrl, 'api', 'feed', topic, 'next'], [{ ref: refStamp }]);
+		return this.send(url, 'GET');
+	}
+
+	getLatestFeed(topic, limit) {
+		const url = tool.urlBuilder([this._baseUrl, 'api', 'feed', topic, 'fresh'], [{ limit }]);
 		return this.send(url, 'GET');
 	}
 }
