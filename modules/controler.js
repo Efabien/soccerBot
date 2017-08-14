@@ -13,6 +13,7 @@ module.exports = (req, res) => {
   for(let i = 0; i<input.length; i++){
     const event = input[i];
     const sender = event.sender.id;
+    console.log(event);
     if (event.message && event.message.text && !event.message.quick_reply) {        
       textMessageHandler(fb, sender, event.message.text, res); 
     } else if (event.postback) {
