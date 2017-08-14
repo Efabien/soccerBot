@@ -21,8 +21,11 @@ request( {
 	method: 'POST',
 	json: req.body.setting
 }).then(response => {
-  if (response.body.error) throw new Error(response.body.error);
-	console.log(response);
+  if (response.body.error) {
+    throw new Error(response.body.error);
+  } else {
+    console.log(response);
+  }
 	res.send(response);
 }).catch(error => {
 	console.log(error);
