@@ -35,4 +35,9 @@ module.exports = class {
 		const url = tool.urlBuilder([this._baseUrl, 'api', 'feed', topic, 'fresh'], [{ limit }]);
 		return this.send(url, 'GET');
 	}
+
+	getMatchResults(league) {
+		const url = tool.urlBuilder([this._baseUrl, 'api', 'soccer', league, 'results']);
+		return this.send(url, 'GET');
+	}
 }
