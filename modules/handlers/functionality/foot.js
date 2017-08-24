@@ -36,21 +36,16 @@
 	latestMatch(fb, sender) {
 		this._restifeo.getMatchResults('championsLeague')
 		.then(result => {
-			const elements = result.slice(0, 4).map(match => {
-				return {
-					title: match.containders.join(' Vs '),
-					subtitle: match.winner ? `Vainqueur : ${match.winner}` : 'Match nul',
-					buttons: [
-						{
-							title: 'Voir le resultat',
-							type: 'postback',
-							payload: `foot_result_CPL_${match.id}`
-						}
-					]
-				}
-			});
+			const body = this.buildMatchDetails(result.slice(0, 4));
+			fb.send(sender, fb.buildListTemplate(body.elements, body.buttons));
+		});
+	}
 
-			fb.send(sender, fb.buildListTemplate(elements));
+	latestMatchFromId(fb, sender, league, id, limit) {
+		this._restifeo.getMatchResultsById(league, id, limit)
+		.then(result => {
+			const body = this.buildMatchDetails(result);
+			fb.send(sender, fb.buildListTemplate(body.elements, body.buttons));
 		});
 	}
 
@@ -68,6 +63,35 @@
 			fb.sendText(sender, text);
 		});
 	}
+
+	buildMatchDetails(data) {
+		const result = {};
+		const lastMatchId = data[data.length - 1].id;
+		result.elements = data.map(match => {
+			return {
+				title: match.containders.join(' Vs '),
+				subtitle: match.winner ? `Vainqueur : ${match.winner}` : 'Match nul',
+				buttons: [
+					{
+						title: 'Voir le resultat',
+						type: 'postback',
+						payload: `foot_result_CPL_detail_${match.id}`
+					}
+				]
+			}
+		});
+
+		result.buttons = [
+			{
+				title: "Matchs suivants",
+				type: 'postback',
+				payload: `foot_result_CPL_next_${lastMatchId}`
+			}
+		];
+
+		return result;
+	}
+	
 }
 
 module.exports = new Foot(restifeo);

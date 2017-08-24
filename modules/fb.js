@@ -105,7 +105,7 @@ module.exports = class Fb {
           }
         ]
   **/
-  buildListTemplate(elements) {
+  buildListTemplate(elements, buttons) {
     const data = {
       attachment: {
         type: 'template',
@@ -116,6 +116,7 @@ module.exports = class Fb {
         }
       }
     };
+    if (buttons) data.attachment.payload.buttons = buttons;
     return data;
   }
 }
