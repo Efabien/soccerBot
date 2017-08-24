@@ -10,6 +10,7 @@ module.exports = class {
 	send(url, method) {
 		return request( {
 			url: url,
+			timeout: 120000,
 			method: method,
 			headers: {
 				authorization: this._authToken
@@ -45,7 +46,6 @@ module.exports = class {
 		const params = [{ id }];
 		if (limit) params.push({ limit });
 		const url = tool.urlBuilder([this._baseUrl, 'api', 'soccer', league, 'results'], params);
-		console.log(url);
 		return this.send(url, 'GET');
 	}
 }

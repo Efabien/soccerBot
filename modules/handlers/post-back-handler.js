@@ -16,6 +16,7 @@ module.exports = (fb, sender, data, res) => {
      if (action === 'getNews') footFunctionality.trigger(fb, sender);
      if (action === 'help') fb.sendText(sender, template.helpMessage);
      if (action === 'result') {
+      if (subAction === 'latestMatch') footFunctionality.latestMatch(fb, sender);
       if (subAction === 'detail') footFunctionality.matchResult(fb, sender, league, id);
       if (subAction === 'next') footFunctionality.latestMatchFromId(fb, sender, league, id, 4);
      }

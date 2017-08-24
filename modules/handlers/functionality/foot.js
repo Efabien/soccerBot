@@ -36,16 +36,24 @@
 	latestMatch(fb, sender) {
 		this._restifeo.getMatchResults('championsLeague')
 		.then(result => {
-			const body = this.buildMatchDetails(result.slice(0, 4));
-			fb.send(sender, fb.buildListTemplate(body.elements, body.buttons));
+			if (!result.length) {
+				fb.sendText(sender, 'Oops, il semblerais qu\'il n\'y ait encore aucun matchs');
+			} else {
+				const body = this.buildMatchDetails(result.slice(0, 4));
+				fb.send(sender, fb.buildListTemplate(body.elements, body.buttons));
+			}	
 		});
 	}
 
 	latestMatchFromId(fb, sender, league, id, limit) {
 		this._restifeo.getMatchResultsById(league, id, limit)
 		.then(result => {
-			const body = this.buildMatchDetails(result);
-			fb.send(sender, fb.buildListTemplate(body.elements, body.buttons));
+			if (!result.length) {
+				fb.sendText(sender, 'Oops, il semblerais qu\'il n\'y ait plus d\'autres matchs');
+			} else {
+				const body = this.buildMatchDetails(result);
+				fb.send(sender, fb.buildListTemplate(body.elements, body.buttons));
+			}
 		});
 	}
 
@@ -58,7 +66,7 @@
 		.then(result => {
 			const match = result[0];
 			const containders = match.containders.join(' Vs ');
-			const text = `${containders}, le score a été de ${match.score}` +
+			const text = `${containders}, le score a été de ${match.score}.` +
 			(match.winner ? ` ${match.winner} est sorti vainqueur.` : '');
 			fb.sendText(sender, text);
 		});
@@ -81,13 +89,15 @@
 			}
 		});
 
-		result.buttons = [
-			{
-				title: "Matchs suivants",
-				type: 'postback',
-				payload: `foot_result_CPL_next_${lastMatchId}`
-			}
-		];
+		if (data.length === 4) {
+			result.buttons = [
+				{
+					title: "Matchs suivants",
+					type: 'postback',
+					payload: `foot_result_CPL_next_${lastMatchId}`
+				}
+			];
+		}	
 
 		return result;
 	}
