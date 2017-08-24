@@ -40,4 +40,12 @@ module.exports = class {
 		const url = tool.urlBuilder([this._baseUrl, 'api', 'soccer', league, 'results']);
 		return this.send(url, 'GET');
 	}
+
+	getMatchResultsById(league, id, limit) {
+		const params = [{ id }];
+		if (limit) params.push({ limit });
+		const url = tool.urlBuilder([this._baseUrl, 'api', 'soccer', league, 'results'], params);
+		console.log(url);
+		return this.send(url, 'GET');
+	}
 }

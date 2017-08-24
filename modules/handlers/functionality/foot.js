@@ -36,7 +36,7 @@
 	latestMatch(fb, sender) {
 		this._restifeo.getMatchResults('championsLeague')
 		.then(result => {
-			const elements = result.slice(0, 4).map((match, index) => {
+			const elements = result.slice(0, 4).map(match => {
 				return {
 					title: match.containders.join(' Vs '),
 					subtitle: match.winner ? `Vainqueur : ${match.winner}` : 'Match nul',
@@ -44,7 +44,7 @@
 						{
 							title: 'Voir le resultat',
 							type: 'postback',
-							payload: `foot_result_CPL_${index}`
+							payload: `foot_result_CPL_${match.id}`
 						}
 					]
 				}
@@ -58,10 +58,10 @@
 		return this._leagueMap[key];
 	}
 	
-	matchResult(fb, sender, league, index) {
-		this._restifeo.getMatchResults(league)
+	matchResult(fb, sender, league, id) {
+		this._restifeo.getMatchResultsById(league, id)
 		.then(result => {
-			const match = result[index];
+			const match = result[0];
 			const containders = match.containders.join(' Vs ');
 			const text = `${containders}, le score a été de ${match.score}` +
 			(match.winner ? ` ${match.winner} est sorti vainqueur.` : '');
