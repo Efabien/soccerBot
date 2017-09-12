@@ -27,8 +27,8 @@ module.exports = class {
 		return this.send(url, 'GET');
 	}
 
-	getNextNews(topic, refStamp) {
-		const url = tool.urlBuilder([this._baseUrl, 'api', 'feed', topic, 'next'], [{ ref: refStamp }]);
+	getNextNews(topic, id) {
+		const url = tool.urlBuilder([this._baseUrl, 'api', 'feed', topic, 'next'], [{ id }]);
 		return this.send(url, 'GET');
 	}
 

@@ -22,14 +22,15 @@
 		});
 	}
 
-	nextNew(fb, sender, refStamp) {
-		this._restifeo.getNextNews('foot', refStamp)
+	nextNew(fb, sender, id) {
+		this._restifeo.getNextNews('foot', id)
 		.then(result => {
-			const message = { text: result.description };
+			const message1 = { text: result.title };
+			const message2 = { text: result.description };
 			const buttons = fb.quickReplyButtons(
 				'Aller aux news suivants',
-				 [{ title: 'suivant', payload: 'foot_' + result.created }]);
-			fb.sendBatch(sender, [message, buttons]);
+				 [{ title: 'suivant', payload: 'foot_' + result.id }]);
+			fb.sendBatch(sender, [message1, message2, buttons]);
 		});
 	}
 
