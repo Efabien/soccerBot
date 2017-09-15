@@ -29,6 +29,7 @@ module.exports = class {
 
 	getNextNews(topic, id) {
 		const url = tool.urlBuilder([this._baseUrl, 'api', 'feed', topic, 'next'], [{ id }]);
+		console.log(url);
 		return this.send(url, 'GET');
 	}
 
