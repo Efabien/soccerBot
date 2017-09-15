@@ -44,7 +44,7 @@ module.exports = class Fb {
       method: 'GET'
     }).then(response => {
       if (response.error) throw new Error(response.error);
-      return response;
+      return JSON.parse(response);
     });
   }
 

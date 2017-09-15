@@ -77,20 +77,22 @@
 	nextMatch(fb, sender, league) {
 		this._restifeo.nextMatch(this._leagueMap[league])
 		.then(result => {
-			const elements = result.matchs.map(match => {
-				return {
-					title: `${match.containder1} Vs ${match.containder2}`,
-					buttons: [
-						{
-							title: `${match.date} à ${match.houre}`,
-							type: 'postback',
-							payload: `foot_upcoming`
-						}
-					]
-				};
-			});
+			fb.getUser(sender, ['timezone']).then(user => {
+				const elements = result.matchs.map(match => {
+					return {
+						title: `${match.containder1} Vs ${match.containder2}`,
+						buttons: [
+							{
+								title: `${match.date} à ${this.switchMatchHour(match, user.timezone)}`,
+								type: 'postback',
+								payload: `foot_upcoming`
+							}
+						]
+					};
+				});
 
-			fb.send(sender, fb.buildListTemplate(elements));
+				fb.send(sender, fb.buildListTemplate(elements));
+			})
 		});
 	}
 
@@ -122,6 +124,16 @@
 		}	
 
 		return result;
+	}
+
+	switchMatchHour(match, timeZone) {
+		const tzMap = {
+			CET: 1
+		}
+		let time = parseInt(match.houre.split(':')[0]);
+		const minutes = match.houre.split(':')[1];
+		time = time + timeZone - tzMap[match.timeZone];
+		return `${time}:${minutes}`;
 	}
 	
 }
