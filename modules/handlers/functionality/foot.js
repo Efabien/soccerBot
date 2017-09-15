@@ -14,11 +14,12 @@
 	trigger(fb, sender) {
 		this._restifeo.getFreshNews('foot')
 		.then(result => {
-			const message = { text: result.description };
+			const message1 = { text: result.title };
+			const message2 = { text: result.description };
 			const buttons = fb.quickReplyButtons(
 				'Aller aux news suivants',
 				 [{ title: 'suivant', payload: 'foot_' + result.id }]);
-			fb.sendBatch(sender, [message, buttons]);
+			fb.sendBatch(sender, [message1, message2, buttons]);
 		});
 	}
 
@@ -70,6 +71,26 @@
 			const text = `${containders}, le score a été de ${match.score}.` +
 			(match.winner ? ` ${match.winner} est sorti vainqueur.` : '');
 			fb.sendText(sender, text);
+		});
+	}
+
+	nextMatch(fb, sender, league) {
+		this._restifeo.nextMatch(this._leagueMap[league])
+		.then(result => {
+			const elements = result.matchs.map(match => {
+				return {
+					title: `${match.containder1} Vs ${match.containder2}`,
+					buttons: [
+						{
+							title: `${match.date} à ${match.houre}`,
+							type: 'postback',
+							payload: `foot_upcoming`
+						}
+					]
+				};
+			});
+
+			fb.send(sender, fb.buildListTemplate(elements));
 		});
 	}
 

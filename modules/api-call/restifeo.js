@@ -29,7 +29,6 @@ module.exports = class {
 
 	getNextNews(topic, id) {
 		const url = tool.urlBuilder([this._baseUrl, 'api', 'feed', topic, 'next'], [{ id }]);
-		console.log(url);
 		return this.send(url, 'GET');
 	}
 
@@ -40,6 +39,11 @@ module.exports = class {
 
 	getMatchResults(league) {
 		const url = tool.urlBuilder([this._baseUrl, 'api', 'soccer', league, 'results']);
+		return this.send(url, 'GET');
+	}
+
+	nextMatch(league) {
+		const url = tool.urlBuilder([this._baseUrl, 'api', 'soccer', league, 'upcoming']);
 		return this.send(url, 'GET');
 	}
 

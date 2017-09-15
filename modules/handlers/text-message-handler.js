@@ -4,6 +4,7 @@ const template = require('../../template');
 module.exports = (fb, sender, data, res) => {
 	if (data.match(/^foot$/i)) footFunctionality.trigger(fb, sender);
 	if (data.match(/^aide$|help/i)) fb.sendText(sender, template.helpMessage);
-	if (data.match(/^score/i)) footFunctionality.latestMatch(fb, sender);
+	if (data.match(/^score$/i)) footFunctionality.latestMatch(fb, sender);
+	if (data.match(/^programme$/i)) footFunctionality.nextMatch(fb, sender, 'CPL');
 	res.sendStatus(200);
 }
