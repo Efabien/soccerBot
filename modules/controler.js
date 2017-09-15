@@ -6,7 +6,8 @@ const quickReply = require('./handlers/quick-reply-handler');
 const Fb = require('./fb');
 const config = require('../config');
 const watcher = require('./handlers/delivery-handeler');
-const fb = new Fb(config.token, config.messengerAPI, watcher);
+
+const fb = new Fb(config.token, config, watcher);
 
 module.exports = (req, res) => {
   const input = req.body.entry[0].messaging;

@@ -2,9 +2,10 @@ const request=require('request-promise');
 const tool=require('./tool');
 
 module.exports = class Fb {
-  constructor(token, url, watcher) {
+  constructor(token, config, watcher) {
     this._token = token;
-    this._url = url;
+    this._messagingUrl = config.messengerAPI;
+    this._graphAPI = config.graphAPI;
     this._watcher = watcher;
   }
 
@@ -14,7 +15,7 @@ module.exports = class Fb {
       data.text = authorizedLength.replace(/ .+$/, '');
     }
     return request( {
-      url: this._url,
+      url: this._messagingUrl,
       timeout: 120000,
       qs:{access_token: this._token},
       method: 'POST',
@@ -24,7 +25,7 @@ module.exports = class Fb {
       }
     }).then((response, body) => {
       if (response.error) {
-        throw new Error(response.error)
+        throw new Error(response.error);
       } else {
         return response.message_id;
       }
@@ -32,7 +33,19 @@ module.exports = class Fb {
   }
 
   sendText(sender, text) {
-      return this.send(sender, { text: text});
+    return this.send(sender, { text: text});
+  }
+
+  getUser(id, projection) {
+    const url = `${this._graphAPI}/${id}/?fields=${projection.join(',')}&access_token=${this._token}`;
+    return request( {
+      url: url,
+      timeout: 120000,
+      method: 'GET'
+    }).then(response => {
+      if (response.error) throw new Error(response.error);
+      return response;
+    });
   }
 
   sendBatch(sender, datas) {
