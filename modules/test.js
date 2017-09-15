@@ -4,13 +4,6 @@ const Restifeo = require('./api-call/restifeo');
 const restifeo = new Restifeo(config);
 const ref = '1501101603000';
 
-restifeo.getFreshNews('foot')
-.then(result => {
-	console.log(result);
-});
-
-restifeo.getNextNews('foot', ref)
-.then(result => {
-	console.log(result);
-});
+const collection = [{item: 1}, {item: 2}, {item: 3}, {item: 4}, {item: 1}, {item: 2}, {item: 3}, {item: 4}, {item: 3}, {item: 4}];
+console.log(tool.breakBy4(collection, []));
 

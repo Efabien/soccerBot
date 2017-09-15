@@ -30,9 +30,20 @@ const urlBuilder = (params, queryParams) => {
     });
   }
   return result + parameters;
-} 
+}
+
+const breakBy4 = (tab, container) => {
+  if (!tab.length) return;
+  if (tab.length <= 4) {
+    container.push(tab);
+    return container;
+  }
+  container.push(tab.splice(0, 4));
+  return breakBy4(tab, container);
+}
 
   
 exports.bkp = breakingPoint;
 exports.urlBuilder = urlBuilder;
+exports.breakBy4 = breakBy4;
 

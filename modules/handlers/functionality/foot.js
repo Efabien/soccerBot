@@ -1,5 +1,6 @@
  const config = require('../../../config');
  const Restifeo = require('../../api-call/restifeo');
+ const tool = require('../../tool');
 
  const restifeo = new Restifeo(config);
  
@@ -91,7 +92,10 @@
 					};
 				});
 
-				fb.send(sender, fb.buildListTemplate(elements));
+				const groupedElements = tool.breakBy4(elements, []);
+				const datas = groupedElements.map(elements => fb.buildListTemplate(elements));
+
+				fb.sendBatch(sender, datas);
 			})
 		});
 	}
