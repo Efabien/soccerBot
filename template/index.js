@@ -1,5 +1,5 @@
 module.exports = {
-	welcomeMessage: `Bonjour, lis les actualités du foot en envoyant tout simplement "foot".
+	welcomeMessage: `Bonjour {{userName}}, lis les actualités du foot en envoyant tout simplement "foot".
 Tu peux aussi reçevoire les derniers résultats en envoyant "score".
 Pour voir les prochains matchs envois "programme";
 Retrouves les même fonctionnalités en allant dans le menu.`,

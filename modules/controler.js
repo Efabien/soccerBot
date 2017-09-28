@@ -14,14 +14,17 @@ module.exports = (req, res) => {
   for(let i = 0; i<input.length; i++){
     const event = input[i];
     const sender = event.sender.id;
-    if (event.message && event.message.text && !event.message.quick_reply) {        
-      textMessageHandler(fb, sender, event.message.text, res); 
-    } else if (event.postback) {
-      postBackHandler(fb, sender, event.postback, res);
-    } else if (event.message && event.message.quick_reply) {
-      quickReply(fb, sender, event.message.quick_reply, res);
-    } else if (event.delivery) {
-      watcher.capture(event.delivery);
-    }
+    fb.getUser(sender, ['first_name', 'last_name', 'locale', 'timezone', 'gender'])
+    .then(user => {
+      if (event.message && event.message.text && !event.message.quick_reply) {        
+        textMessageHandler(fb, user, event.message.text, res); 
+      } else if (event.postback) {
+        postBackHandler(fb, user, event.postback, res);
+      } else if (event.message && event.message.quick_reply) {
+        quickReply(fb, user, event.message.quick_reply, res);
+      } else if (event.delivery) {
+        watcher.capture(event.delivery);
+      }
+    });
   }
 }
