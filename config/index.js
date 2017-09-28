@@ -5,5 +5,7 @@ module.exports = {
 	messengerAPI: 'https://graph.facebook.com/v2.6/me/messages',
 	restifeoBaseUrl: process.env.RESTIFEO,
 	restifeoAuthToken : process.env.RESTIFEO_AUTH_TOKEN,
-	accessAPI: process.env.ACCESS_API
+	accessAPI: process.env.ACCESS_API,
+	payloadMap: ['type', 'action', 'league', 'subAction', 'id'],
+	payloadSeparator: '_'
 }

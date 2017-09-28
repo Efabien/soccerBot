@@ -1,6 +1,6 @@
 const footFunctionality = require('./functionality/foot');
 
-module.exports = (fb, user, data, res) => {
+module.exports = (fb, user, data, payloadHandeler, res) => {
 	const type = data.payload.split('_')[0];
 	if (type === 'foot') {
 		const id = data.payload.split('_')[1];
