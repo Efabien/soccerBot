@@ -84,7 +84,7 @@
 						title: `${match.containder1} Vs ${match.containder2}`,
 						buttons: [
 							{
-								title: this.getMatchTitle(match, user. timezone),
+								title: this.getMatchTitle(match, user.timezone),
 								type: 'postback',
 								payload: `foot_upcoming`
 							}
@@ -147,7 +147,7 @@
 		}
 
 		if (time > 23) {
-			 time = addZero(time - 24);
+			 time = time - 24;
 			 day ++;
 		}
 		let maxDay;
@@ -157,7 +157,7 @@
 			maxDay = (month < 8 && month % 2 !== 0) || (month >= 8 && month % 2 === 0) ? 31 : 30;
 		}
 		if (day > maxDay) {
-			day = addZero(day - maxDay);
+			day = day - maxDay;
 			month ++;
 		}
 
@@ -166,6 +166,9 @@
 			year ++;
 		}
 
+		day = addZero(day);
+		month = addZero(month);
+		time = addZero(time);
 		return `${day}/${month}/${year} à ${time}:${minutes}`;
 	}
 	
