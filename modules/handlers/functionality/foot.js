@@ -84,7 +84,7 @@
 						title: `${match.containder1} Vs ${match.containder2}`,
 						buttons: [
 							{
-								title: `${match.date} à ${this.switchMatchHour(match, user.timezone)}`,
+								title: this.getMatchTitle(match, user. timezone),
 								type: 'postback',
 								payload: `foot_upcoming`
 							}
@@ -130,14 +130,43 @@
 		return result;
 	}
 
-	switchMatchHour(match, timeZone) {
+	getMatchTitle(match, timeZone) {
 		const tzMap = {
 			CET: 1
 		}
+		const decomposedDate = match.date.split('/');
+		let day = parseInt(decomposedDate[0]);
+		let month = parseInt(decomposedDate[1]);
+		let year = parseInt(decomposedDate[2]);
 		let time = parseInt(match.houre.split(':')[0]);
 		const minutes = match.houre.split(':')[1];
 		time = time + timeZone - tzMap[match.timeZone];
-		return `${time}:${minutes}`;
+
+		const addZero = (numb) => {
+			return numb < 10 ? `0${numb}` : numb;
+		}
+
+		if (time > 23) {
+			 time = addZero(time - 24);
+			 day ++;
+		}
+		let maxDay;
+		if (month === 2 ) {
+			maxDay = year % 4 ? 28 : 29;
+		} else {
+			maxDay = (month < 8 && month % 2 !== 0) || (month >= 8 && month % 2 === 0) ? 31 : 30;
+		}
+		if (day > maxDay) {
+			day = addZero(day - maxDay);
+			month ++;
+		}
+
+		if (month > 12) {
+			month = month - 12;
+			year ++;
+		}
+
+		return `${day}/${month}/${year} à ${time}:${minutes}`;
 	}
 	
 }
